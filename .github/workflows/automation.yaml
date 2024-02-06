@@ -10,17 +10,21 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+          git diff --name-only ${{ github.event.before }} ${{ github.sha }}
 
     - name: Azure Login
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }} # principal json information in Action Secrets
-
+        
     - name: List changed files
       run: |
         
         # Get the list of changed files
-        changed_files=$(git show --pretty="" --name-only -r ${{ github.sha }})
+        changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+        "$(git show --pretty="" --name-only -r ${{ github.sha }})
         echo "$changed_files"
         
 
