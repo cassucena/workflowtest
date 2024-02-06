@@ -18,12 +18,9 @@ jobs:
 
     - name: Deploy to Azure Automation
       run: |
-        for file in ./*.py; do
+        for file in ./*; do
           runbook_name=$(basename "$file" .py)
           az automation runbook create --resource-group "teste" --automation-account "workflow" --name "$runbook_name" --type Python3 
         done
 
-        for file in ./*.ps1; do
-          runbook_name=$(basename "$file" .ps1)
-          az automation runbook create --resource-group "teste" --automation-account "workflow" --name "$runbook_name" --type PowerShell  
-        done
+       
