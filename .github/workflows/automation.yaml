@@ -20,14 +20,39 @@ jobs:
       run: |
         for file in ./scripts/*; do
           runbook_name=$(basename "$file" .py)
-          az automation runbook create --resource-group "teste" --automation-account "workflow" --name "$runbook_name" --type Python3 
-          az automation runbook replace-content --automation-account-name "workflow" --resource-group "teste" --name "$runbook_name" --content "@$file"
-          az automation runbook publish --automation-account-name "workflow" --resource-group "teste" --name "$runbook_name"
+      
+          # Check if the runbook already exists
+          if ! az automation runbook show --resource-group "teste" --automation-account "workflow" --name "$runbook_name" &>/dev/null; then
+              # Runbook doesn't exist, create it
+              az automation runbook create --resource-group "teste" --automation-account "workflow" --name "$runbook_name" --type Python3 
+          fi
+          
+          # Replace the content of the runbook with the content from the local Python script
+          az automation runbook replace-content --automation-account "workflow" --resource-group "teste" --name "$runbook_name" --content "@$file"
+          
+          # Publish the runbook
+          az automation runbook publish --automation-account "workflow" --resource-group "teste" --name "$runbook_name"
         done
 
         for file in ./scripts/*; do
           runbook_name=$(basename "$file" .ps1)
-          az automation runbook create --resource-group "teste" --automation-account "workflow" --name "$runbook_name" --type Powershell 
-          az automation runbook replace-content --automation-account-name "workflow" --resource-group "teste" --name "$runbook_name" --content "@$file"
-          az automation runbook publish --automation-account-name "workflow" --resource-group "teste" --name "$runbook_name"
+      
+          # Check if the runbook already exists
+          if ! az automation runbook show --resource-group "teste" --automation-account "workflow" --name "$runbook_name" &>/dev/null; then
+              # Runbook doesn't exist, create it
+              az automation runbook create --resource-group "teste" --automation-account "workflow" --name "$runbook_name" --type Powershell 
+          fi
+          
+          # Replace the content of the runbook with the content from the local Python script
+          az automation runbook replace-content --automation-account "workflow" --resource-group "teste" --name "$runbook_name" --content "@$file"
+          
+          # Publish the runbook
+          az automation runbook publish --automation-account "workflow" --resource-group "teste" --name "$runbook_name"
         done
+
+        # for file in ./scripts/*; do
+        #   runbook_name=$(basename "$file" .ps1)
+        #   az automation runbook create --resource-group "teste" --automation-account "workflow" --name "$runbook_name" --type Powershell 
+        #   az automation runbook replace-content --automation-account-name "workflow" --resource-group "teste" --name "$runbook_name" --content "@$file"
+        #   az automation runbook publish --automation-account-name "workflow" --resource-group "teste" --name "$runbook_name"
+        # done
