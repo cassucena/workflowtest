@@ -25,5 +25,5 @@ jobs:
 
         for file in ./*.ps1; do
           runbook_name=$(basename "$file" .ps1)
-          az automation runbook create -resource-group "teste" --automation-account "workflow" --name "$runbook_name" --type PowerShell  
+          az automation runbook create --resource-group "teste" --automation-account "workflow" --name "$runbook_name" --type PowerShell  
         done
