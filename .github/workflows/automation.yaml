@@ -16,6 +16,17 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }} # principal json information in Action Secrets
 
+    - name: List changed files
+      run: |
+        # Get the list of changed files
+        changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+   
+        # Filter only  files
+        changed_files=$(echo "$changed_files" || true)
+   
+        # Print the changed files (for demonstration purposes)
+        echo "Changed  files: $changed_files"
+
     - name: Deploy to Azure Automation
       run: |
         for file in ./scripts/*.py; do
