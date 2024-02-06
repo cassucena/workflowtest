@@ -24,8 +24,13 @@ jobs:
         
         # Get the list of changed files
         changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
-        #$(git show --pretty="" --name-only -r ${{ github.sha }})
         echo "$changed_files"
+
+        # Filter only Ps1 files
+        js_files=$(echo "$changed_files" | grep '\.ps1$' || true)
+ 
+        # Print the changed files (for demonstration purposes)
+        echo "Changed Ps1 files: $ps1_files"
         
 
     - name: Deploy to Azure Automation
