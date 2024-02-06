@@ -16,27 +16,40 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }} # principal json information in Action Secrets
 
-    - name: Deploy to Azure Automation
+    - name: Deploy Azure runbooks
+      uses: azure/powershell@v1
+      with:
+        inlineScript: |
+          pushd ./scripts/runbooks
+          Import-AzAutomationRunbook -Path "test.ps1"  -Name test -Type PowerShell -AutomationAccountName 'workflow' -ResourceGroupName 'teste' -Force
+          Publish-AzAutomationRunbook -Name test -AutomationAccountName 'workflow'  -ResourceGroupName 'teste'
+          popd
+        azPSVersion: "latest"
+
+    # Logout
+    - name: logout
       run: |
-        $automationAccount = Get-AzAutomationAccount -ResourceGroupName "teste" -Name "workflow"
-          runbook_name= "test.ps1"
-        # Import the runbook to Azure Automation
-          $runbookContent = Get-Content -Path ./$runbook_name -Raw
-          $runbookProperties = @{
-              Name = $runbook_name
-              Content = $runbookContent
-              ResourceGroupName = "teste"
-              AutomationAccountName = "workflow"
-          }
-          $importedRunbook = Import-AzAutomationRunbook @runbookProperties
+        az logout
+    #run: |
+        # $automationAccount = Get-AzAutomationAccount -ResourceGroupName "teste" -Name "workflow"
+        #   runbook_name= "test.ps1"
+        # # Import the runbook to Azure Automation
+        #   $runbookContent = Get-Content -Path ./$runbook_name -Raw
+        #   $runbookProperties = @{
+        #       Name = $runbook_name
+        #       Content = $runbookContent
+        #       ResourceGroupName = "teste"
+        #       AutomationAccountName = "workflow"
+        #   }
+        #   $importedRunbook = Import-AzAutomationRunbook @runbookProperties
         
-          # Publish the runbook
-          $publishProperties = @{
-              ResourceGroupName = "teste"
-              AutomationAccountName = "workflow"
-              Name = $runbookName
-          }
-          Publish-AzAutomationRunbook @publishProperties
+        #   # Publish the runbook
+        #   $publishProperties = @{
+        #       ResourceGroupName = "teste"
+        #       AutomationAccountName = "workflow"
+        #       Name = $runbookName
+        #   }
+        #   Publish-AzAutomationRunbook @publishProperties
         
        
         # for file in ./*.py; do
