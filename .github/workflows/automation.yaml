@@ -33,7 +33,7 @@ jobs:
           New-AzAutomationRunbook @params1
 
           $params2 = @{
-            AutomationAccountName = ''workflow'
+            AutomationAccountName = 'workflow'
             Name                  = 'test'
             ResourceGroupName     = 'teste'
             Type                  = 'PowerShell'
