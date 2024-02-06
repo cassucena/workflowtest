@@ -37,7 +37,7 @@ jobs:
             Name                  = 'test'
             ResourceGroupName     = 'teste'
             Type                  = 'PowerShell'
-            Path                  = './test.ps1'    
+            Path                  = '.\scripts\test.ps1'    
           }
           Import-AzAutomationRunbook @params
       
