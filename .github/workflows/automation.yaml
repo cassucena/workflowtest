@@ -22,7 +22,7 @@ jobs:
           runbook_name=$(basename "$file" .py)
       
           # Check if the runbook already exists
-          if ! az automation runbook show --resource-group "teste" --automation-account "workflow" --name "$runbook_name" --type Python3 &>/dev/null; then
+          if ! az automation runbook show --resource-group "teste" --automation-account "workflow" --name "$runbook_name" &>/dev/null; then
               # Runbook doesn't exist, create it
               az automation runbook create --resource-group "teste" --automation-account "workflow" --name "$runbook_name" --type Python3 
           fi
@@ -38,7 +38,7 @@ jobs:
           runbook_name=$(basename "$file" .ps1)
       
           # Check if the runbook already exists
-          if ! az automation runbook show --resource-group "teste" --automation-account "workflow" --name "$runbook_name" --type Powershell  &>/dev/null; then
+          if ! az automation runbook show --resource-group "teste" --automation-account "workflow" --name "$runbook_name" &>/dev/null; then
               # Runbook doesn't exist, create it
               az automation runbook create --resource-group "teste" --automation-account "workflow" --name "$runbook_name" --type Powershell 
           fi
