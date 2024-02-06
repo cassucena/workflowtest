@@ -1,11 +1,8 @@
 name: Azure Automation Deployment
 on:
   push:
-    branches: 
-      - main
-
-  workflow_dispatch:
-
+    branches:
+      - main  
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -19,63 +16,9 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }} # principal json information in Action Secrets
 
-    - name: Deploy Azure runbooks
-      uses: azure/powershell@v1
-      with:
-        inlineScript: |
-          
-          # $params1 = @{
-          #   AutomationAccountName = 'workflow'
-          #   Name                  = 'test'
-          #   ResourceGroupName     = 'teste'
-          #   Type                  = 'PowerShell'
-          # }
-          # New-AzAutomationRunbook @params1
-
-          $params2 = @{
-            AutomationAccountName = 'workflow'
-            Name                  = 'test'
-            ResourceGroupName     = 'teste'
-            Type                  = 'PowerShell'
-            Path                  = '.\scripts\test.ps1'    
-          }
-          Import-AzAutomationRunbook @params2
-      
-        azPSVersion: "latest"
-
-    # Logout
-    - name: logout
+    - name: Deploy to Azure Automation
       run: |
-        az logout
-
-    #run: |
-        # $automationAccount = Get-AzAutomationAccount -ResourceGroupName "teste" -Name "workflow"
-        #   runbook_name= "test.ps1"
-        # # Import the runbook to Azure Automation
-        #   $runbookContent = Get-Content -Path ./$runbook_name -Raw
-        #   $runbookProperties = @{
-        #       Name = $runbook_name
-        #       Content = $runbookContent
-        #       ResourceGroupName = "teste"
-        #       AutomationAccountName = "workflow"
-        #   }
-        #   $importedRunbook = Import-AzAutomationRunbook @runbookProperties
-        
-        #   # Publish the runbook
-        #   $publishProperties = @{
-        #       ResourceGroupName = "teste"
-        #       AutomationAccountName = "workflow"
-        #       Name = $runbookName
-        #   }
-        #   Publish-AzAutomationRunbook @publishProperties
-        
-       
-        # for file in ./*.py; do
-        #   runbook_name=$(basename "$file" .py)
-        #   az automation runbook create --resource-group "teste" --automation-account "workflow" --name "$runbook_name" --type Python3 
-        # done
-
-        # for file in ./*.ps1; do
-        #   runbook_name=$(basename "$file" .ps1)
-        #   az automation runbook create --resource-group "teste" --automation-account "workflow" --name "$runbook_name" --type PowerShell  
-        # done
+        for file in ./scripts/*; do
+          runbook_name=$(basename "$file" .py)
+          az automation runbook create --resource-group "teste" --automation-account "workflow" --name "$runbook_name" --type Python3 
+        done
