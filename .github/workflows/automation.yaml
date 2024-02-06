@@ -1,0 +1,29 @@
+name: Azure Automation Deployment
+on:
+  push:
+    branches:
+      - feature  
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }} # principal json information in Action Secrets
+
+    - name: Deploy to Azure Automation
+      run: |
+        for file in /azure/runbooks/*.py; do
+          runbook_name=$(basename "$file" .py)
+          az automation runbook publish --resource-group "rg-ne-governance" --automation-account "aa-ne-governance" --name "$runbook_name" --file "$file" --no-wait
+        done
+
+        for file in /azure/runbooks/*.ps1; do
+          runbook_name=$(basename "$file" .ps1)
+          az automation runbook publish --resource-group "rg-ne-governance" --automation-account "aa-ne-governance" --name "$runbook_name" --file "$file" --no-wait
+        done
