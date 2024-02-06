@@ -23,6 +23,7 @@ jobs:
       uses: azure/powershell@v1
       with:
         inlineScript: |
+          pwd
           ls
           Import-AzAutomationRunbook -Path "scripts/test.py"  -Name test -Type PowerShell -AutomationAccountName 'workflow' -ResourceGroupName 'teste' -Force
           Publish-AzAutomationRunbook -Name test -AutomationAccountName 'workflow'  -ResourceGroupName 'teste'
