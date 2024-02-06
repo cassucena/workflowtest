@@ -1,8 +1,9 @@
 name: Azure Automation Deployment
 on:
   push:
-    branches:
-      - main  
+    branches: ["main"]
+    paths:
+      - "workflowtest/**"
 jobs:
   deploy:
     runs-on: windows-latest
@@ -20,7 +21,7 @@ jobs:
       uses: azure/powershell@v1
       with:
         inlineScript: |
-          pushd workflowtest/
+          pushd ./
           Import-AzAutomationRunbook -Path "test.ps1"  -Name test -Type PowerShell -AutomationAccountName 'workflow' -ResourceGroupName 'teste' -Force
           Publish-AzAutomationRunbook -Name test -AutomationAccountName 'workflow'  -ResourceGroupName 'teste'
           popd
