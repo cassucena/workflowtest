@@ -19,7 +19,8 @@ jobs:
     - name: List changed files
       run: |
         # Get the list of changed files
-        changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+        changed_files=$(git diff-tree --no-commit-id --name-only -r ${{ github.event.before }} ${{ github.sha }})
+        #changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
    
         # Filter only JavaScript files
         ps1_files=$(echo "$changed_files" | grep '\.ps1$' || true)
