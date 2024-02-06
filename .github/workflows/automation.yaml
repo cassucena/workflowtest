@@ -40,6 +40,9 @@ jobs:
             Path                  = './test.ps1'    
           }
           Import-AzAutomationRunbook @params
+      
+        azPSVersion: "latest"
+
     # Logout
     - name: logout
       run: |
