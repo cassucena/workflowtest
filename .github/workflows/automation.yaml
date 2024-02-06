@@ -1,9 +1,9 @@
 name: Azure Automation Deployment
 on:
   push:
-    branches: ["main"]
-    paths:
-      - "scripts/**"
+    branches: 
+      - main
+
   workflow_dispatch:
 
 jobs:
