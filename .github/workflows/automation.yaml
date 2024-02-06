@@ -20,7 +20,7 @@ jobs:
       run: |
         
         # Get the list of changed files
-        changed_files=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})
+        changed_files=$(git show --pretty="" --name-only -r ${{ github.sha }})
         echo "$changed_files"
         
 
