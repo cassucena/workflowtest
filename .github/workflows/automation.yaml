@@ -3,7 +3,8 @@ on:
   push:
     branches: ["main"]
     paths:
-      - "scripts/"
+      - "scripts/*"
+  workflow_dispatch:
 jobs:
   deploy:
     runs-on: windows-latest
