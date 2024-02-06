@@ -24,7 +24,7 @@ jobs:
         
         # Get the list of changed files
         changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
-        "$(git show --pretty="" --name-only -r ${{ github.sha }})
+        #$(git show --pretty="" --name-only -r ${{ github.sha }})
         echo "$changed_files"
         
 
