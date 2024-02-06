@@ -21,11 +21,11 @@ jobs:
         # Get the list of changed files
         changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
    
-        # Filter only  files
-        changed_files=$(echo "$changed_files" || true)
+        # Filter only JavaScript files
+        ps1_files=$(echo "$changed_files" | grep '\.ps1$' || true)
    
         # Print the changed files (for demonstration purposes)
-        echo "Changed  files: $changed_files"
+        echo "Changed JavaScript files: $ps1_files"
 
     - name: Deploy to Azure Automation
       run: |
