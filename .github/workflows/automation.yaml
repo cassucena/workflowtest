@@ -31,6 +31,7 @@ jobs:
     - name: logout
       run: |
         az logout
+        
     #run: |
         # $automationAccount = Get-AzAutomationAccount -ResourceGroupName "teste" -Name "workflow"
         #   runbook_name= "test.ps1"
