@@ -21,5 +21,5 @@ jobs:
         for file in ./scripts/*; do
           runbook_name=$(basename "$file" .py)
           az automation runbook create --resource-group "teste" --automation-account "workflow" --name "$runbook_name" --type Python3 
-          az automation runbook replace-content --automation-account-name "workflow" --resource-group "teste" --name "$runbook_name" --content "@/scripts/test.py"
+          az automation runbook replace-content --automation-account-name "workflow" --resource-group "teste" --name "$runbook_name" --content "@$file"
         done
