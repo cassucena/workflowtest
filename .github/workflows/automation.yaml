@@ -21,7 +21,7 @@ jobs:
       with:
         inlineScript: |
           pushd ./
-          Import-AzAutomationRunbook -Path "test.ps1"  -Name test -Type PowerShell -AutomationAccountName 'workflow' -ResourceGroupName 'teste' -Force
+          Import-AzAutomationRunbook -Path ".\test.ps1"  -Name test -Type PowerShell -AutomationAccountName 'workflow' -ResourceGroupName 'teste' -Force
           Publish-AzAutomationRunbook -Name test -AutomationAccountName 'workflow'  -ResourceGroupName 'teste'
           popd
         azPSVersion: "latest"
