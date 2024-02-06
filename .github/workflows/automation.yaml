@@ -24,13 +24,13 @@ jobs:
       with:
         inlineScript: |
           
-          $params1 = @{
-            AutomationAccountName = 'workflow'
-            Name                  = 'test'
-            ResourceGroupName     = 'teste'
-            Type                  = 'PowerShell'
-          }
-          New-AzAutomationRunbook @params1
+          # $params1 = @{
+          #   AutomationAccountName = 'workflow'
+          #   Name                  = 'test'
+          #   ResourceGroupName     = 'teste'
+          #   Type                  = 'PowerShell'
+          # }
+          # New-AzAutomationRunbook @params1
 
           $params2 = @{
             AutomationAccountName = 'workflow'
