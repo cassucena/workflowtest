@@ -19,7 +19,7 @@ jobs:
     - name: Deploy to Azure Automation
       run: |
         $automationAccount = Get-AzAutomationAccount -ResourceGroupName "teste" -Name "workflow"
-          runbook_name= "test.ps1
+          runbook_name= "test.ps1"
         # Import the runbook to Azure Automation
           $runbookContent = Get-Content -Path ./$runbook_name -Raw
           $runbookProperties = @{
