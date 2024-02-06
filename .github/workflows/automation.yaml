@@ -39,7 +39,7 @@ jobs:
             Type                  = 'PowerShell'
             Path                  = '.\scripts\test.ps1'    
           }
-          Import-AzAutomationRunbook @params
+          Import-AzAutomationRunbook @params2
       
         azPSVersion: "latest"
 
