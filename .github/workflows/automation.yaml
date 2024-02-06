@@ -18,9 +18,34 @@ jobs:
 
     - name: Deploy to Azure Automation
       run: |
-        for file in ./*; do
-          runbook_name=$(basename "$file" .py)
-          az automation runbook create --resource-group "teste" --automation-account "workflow" --name "$runbook_name" --type Python3 
+        $automationAccount = Get-AzAutomationAccount -ResourceGroupName "teste" -Name "workflow"
+        for file in ./*.ps1; do
+          runbook_name=$(basename "$file" .ps1)
+        # Import the runbook to Azure Automation
+          $runbookContent = Get-Content -Path ./$runbook_name -Raw
+          $runbookProperties = @{
+              Name = $runbook_name
+              Content = $runbookContent
+              ResourceGroupName = "teste"
+              AutomationAccountName = "workflow"
+          }
+          $importedRunbook = Import-AzAutomationRunbook @runbookProperties
+        
+          # Publish the runbook
+          $publishProperties = @{
+              ResourceGroupName = "teste"
+              AutomationAccountName = "workflow"
+              Name = $runbookName
+          }
+          Publish-AzAutomationRunbook @publishProperties
         done
-
        
+        # for file in ./*.py; do
+        #   runbook_name=$(basename "$file" .py)
+        #   az automation runbook create --resource-group "teste" --automation-account "workflow" --name "$runbook_name" --type Python3 
+        # done
+
+        # for file in ./*.ps1; do
+        #   runbook_name=$(basename "$file" .ps1)
+        #   az automation runbook create --resource-group "teste" --automation-account "workflow" --name "$runbook_name" --type PowerShell  
+        # done
