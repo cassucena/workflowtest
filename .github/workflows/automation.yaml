@@ -19,8 +19,7 @@ jobs:
     - name: Deploy to Azure Automation
       run: |
         $automationAccount = Get-AzAutomationAccount -ResourceGroupName "teste" -Name "workflow"
-        for file in ./*.ps1; do
-          runbook_name=$(basename "$file" .ps1)
+          runbook_name= "test.ps1
         # Import the runbook to Azure Automation
           $runbookContent = Get-Content -Path ./$runbook_name -Raw
           $runbookProperties = @{
@@ -38,7 +37,7 @@ jobs:
               Name = $runbookName
           }
           Publish-AzAutomationRunbook @publishProperties
-        done
+        
        
         # for file in ./*.py; do
         #   runbook_name=$(basename "$file" .py)
