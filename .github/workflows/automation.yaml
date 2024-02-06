@@ -20,8 +20,8 @@ jobs:
       uses: azure/powershell@v1
       with:
         inlineScript: |
-          pushd ./
-          Import-AzAutomationRunbook -Path "./test.ps1"  -Name test -Type PowerShell -AutomationAccountName 'workflow' -ResourceGroupName 'teste' -Force
+          pushd ./workflowtest/
+          Import-AzAutomationRunbook -Path "test.ps1"  -Name test -Type PowerShell -AutomationAccountName 'workflow' -ResourceGroupName 'teste' -Force
           Publish-AzAutomationRunbook -Name test -AutomationAccountName 'workflow'  -ResourceGroupName 'teste'
           popd
         azPSVersion: "latest"
