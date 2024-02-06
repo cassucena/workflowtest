@@ -21,9 +21,11 @@ jobs:
         for file in ./*.py; do
           runbook_name=$(basename "$file" .py)
           az automation runbook create --resource-group "teste" --automation-account "workflow" --name "$runbook_name" --type Python3 --content "$file" --no-wait
+          az automation runbook replace-content --resource-group "teste" --automation-account "workflow" --name "$runbook_name"  --content "$file" 
         done
 
         for file in ./*.ps1; do
           runbook_name=$(basename "$file" .ps1)
-          az automation runbook create -resource-group "teste" --automation-account "workflow" --name "$runbook_name" type PowerShell --content "$file" --no-wait
+          az automation runbook create -resource-group "teste" --automation-account "workflow" --name "$runbook_name" --type PowerShell --content "$file" --no-wait
+          az automation runbook replace-content --resource-group "teste" --automation-account "workflow" --name "$runbook_name" --content "$file" 
         done
