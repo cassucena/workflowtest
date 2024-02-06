@@ -18,15 +18,11 @@ jobs:
 
     - name: List changed files
       run: |
-        git diff-tree --no-commit-id --name-only -r ${{ github.sha }}
+        
         # Get the list of changed files
         changed_files=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})
-   
-        # Filter only JavaScript files
-        ps1_files=$(echo "$changed_files" || true)
-   
-        # Print the changed files (for demonstration purposes)
-        echo "Changed JavaScript files: $ps1_files"
+        echo "$changed_files"
+        
 
     - name: Deploy to Azure Automation
       run: |
