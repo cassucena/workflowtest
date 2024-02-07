@@ -51,7 +51,7 @@ jobs:
           az automation runbook publish --automation-account "workflow" --resource-group "teste" --name "$runbook_name"
         done
 
-        for file in $ps1_files; do
+        for file in $py_files; do
         runbook_name=$(basename "$file" .py)
     
         # Check if the runbook already exists
