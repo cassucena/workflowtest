@@ -18,10 +18,9 @@ jobs:
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }} # principal json information in Action Secrets
-        
+                
     - name: List changed files and Deploy in Automation Account
       run: |
-
       # Get the list of changed files
         changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
         echo "$changed_files"
