@@ -2,7 +2,9 @@ name: Azure Automation Deployment
 on:
   push:
     branches:
-      - main  
+      - 'main'
+    paths:
+      - 'scripts/**' 
 jobs:
   deploy:
     runs-on: ubuntu-latest
