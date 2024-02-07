@@ -42,8 +42,8 @@ jobs:
               az automation runbook create --resource-group "teste" --automation-account "workflow" --name "$runbook_name" --type Powershell 
           fi
             
-          # Replace the content of the runbook with the content from the local Python script
-          az automation runbook replace-content --automation-account "workflow" --resource-group "teste" --name "$runbook_name" --content "@$file"
+          # # Replace the content of the runbook with the content from the local Python script
+          # az automation runbook replace-content --automation-account "workflow" --resource-group "teste" --name "$runbook_name" --content "@$file"
             
         #   # Publish the runbook
         #   az automation runbook publish --automation-account "workflow" --resource-group "teste" --name "$runbook_name"
