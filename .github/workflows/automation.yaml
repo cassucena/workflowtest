@@ -33,14 +33,14 @@ jobs:
         #echo "Changed py files: $py_files"
         az account list
           
-        # for file in $ps1_files; do
-        #   runbook_name=$(basename "$file" .ps1)
+        for file in $ps1_files; do
+          runbook_name=$(basename "$file" .ps1)
         
-        #   # Check if the runbook already exists
-        #   if ! az automation runbook show --resource-group "teste" --automation-account "workflow" --name "$runbook_name" &>/dev/null; then
-        #       # Runbook doesn't exist, create it
-        #       az automation runbook create --resource-group "teste" --automation-account "workflow" --name "$runbook_name" --type Powershell 
-        #   fi
+          # Check if the runbook already exists
+          if ! az automation runbook show --resource-group "teste" --automation-account "workflow" --name "$runbook_name" &>/dev/null; then
+              # Runbook doesn't exist, create it
+              az automation runbook create --resource-group "teste" --automation-account "workflow" --name "$runbook_name" --type Powershell 
+          fi
             
         #   # Replace the content of the runbook with the content from the local Python script
         #   az automation runbook replace-content --automation-account "workflow" --resource-group "teste" --name "$runbook_name" --content "@$file"
