@@ -1,4 +1,4 @@
-﻿name: Azure Automation Deployment
+name: Azure Automation Deployment
 on:
   push:
     branches:
