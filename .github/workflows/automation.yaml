@@ -20,7 +20,12 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }} # principal json information in Action Secrets
                 
     - name: List changed files and Deploy in Automation Account
-      run: |
+      # run: |
+      #   - name: Azure CLI script
+      uses: azure/CLI@v1
+      with:
+        azcliversion: 2.30.0
+        inlineScript: |
         
         # Get the list of changed files
         changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
