@@ -33,7 +33,7 @@ jobs:
         echo "Changed Ps1 files: $ps1_files"
 
         
-        for file in ./scripts/*.ps1; do
+        for file in $ps1_files; do
           runbook_name=$(basename "$file" .ps1)
       
           # Check if the runbook already exists
