@@ -21,9 +21,7 @@ jobs:
                 
     - name: List changed files and Deploy in Automation Account
       run: |
-        sudo apt-get remove azure-cli
-        sudo apt-get update
-        sudo apt-get install azure-cli
+        
         # Get the list of changed files
         changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
         echo "$changed_files"
