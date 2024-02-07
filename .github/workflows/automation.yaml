@@ -32,21 +32,21 @@ jobs:
         echo "Changed Ps1 files: $ps1_files"
         #echo "Changed py files: $py_files"
         az account list
-          
+        az extension add --name automation  
         for file in $ps1_files; do
           runbook_name=$(basename "$file" .ps1)
-          az automation runbook create --resource-group "teste" --automation-account "workflow" --name "$runbook_name" --type Powershell
-          # # Check if the runbook already exists
-          # if ! az automation runbook show --resource-group "teste" --automation-account "workflow" --name "$runbook_name" &>/dev/null; then
-          #     # Runbook doesn't exist, create it
-          #     az automation runbook create --resource-group "teste" --automation-account "workflow" --name "$runbook_name" --type Powershell 
-          # fi
+          
+          # Check if the runbook already exists
+          if ! az automation runbook show --resource-group "teste" --automation-account "workflow" --name "$runbook_name" &>/dev/null; then
+              # Runbook doesn't exist, create it
+              az automation runbook create --resource-group "teste" --automation-account "workflow" --name "$runbook_name" --type Powershell 
+          fi
             
-          # # Replace the content of the runbook with the content from the local Python script
-          # az automation runbook replace-content --automation-account "workflow" --resource-group "teste" --name "$runbook_name" --content "@$file"
+          # Replace the content of the runbook with the content from the local Python script
+          az automation runbook replace-content --automation-account "workflow" --resource-group "teste" --name "$runbook_name" --content "@$file"
             
-        #   # Publish the runbook
-        #   az automation runbook publish --automation-account "workflow" --resource-group "teste" --name "$runbook_name"
+          # Publish the runbook
+          az automation runbook publish --automation-account "workflow" --resource-group "teste" --name "$runbook_name"
         done
 
         # for file in $py_files; do
