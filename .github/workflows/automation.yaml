@@ -5,6 +5,9 @@ on:
       - 'main'
     paths:
       - 'scripts/**' 
+env:
+  AUTOMATION_ACCOUNT: workflow
+  RESOURCE_GROUP: teste
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -40,31 +43,31 @@ jobs:
           runbook_name=$(basename "$file" .ps1)
           
           # Check if the runbook already exists
-          if ! az automation runbook show --resource-group "teste" --automation-account "workflow" --name "$runbook_name" &>/dev/null; then
+          if ! az automation runbook show --resource-group $RESOURCE_GROUP --automation-account $AUTOMATION_ACCOUNT --name "$runbook_name" &>/dev/null; then
               # Runbook doesn't exist, create it
-              az automation runbook create --resource-group "teste" --automation-account "workflow" --name "$runbook_name" --type Powershell 
+              az automation runbook create --resource-group $RESOURCE_GROUP --automation-account $AUTOMATION_ACCOUNT --name "$runbook_name" --type Powershell 
           fi
             
           # Replace the content of the runbook with the content from the local Python script
-          az automation runbook replace-content --automation-account "workflow" --resource-group "teste" --name "$runbook_name" --content "@$file"
+          az automation runbook replace-content --automation-account $AUTOMATION_ACCOUNT --resource-group $RESOURCE_GROUP --name "$runbook_name" --content "@$file"
             
           # Publish the runbook
-          az automation runbook publish --automation-account "workflow" --resource-group "teste" --name "$runbook_name"
+          az automation runbook publish --automation-account $AUTOMATION_ACCOUNT --resource-group $RESOURCE_GROUP --name "$runbook_name"
         done
 
         for file in $py_files; do
         runbook_name=$(basename "$file" .py)
       
         # Check if the runbook already exists
-        if ! az automation runbook show --resource-group "teste" --automation-account "workflow" --name "$runbook_name" &>/dev/null; then
+        if ! az automation runbook show --resource-group $RESOURCE_GROUP --automation-account $AUTOMATION_ACCOUNT --name "$runbook_name" &>/dev/null; then
             # Runbook doesn't exist, create it
-            az automation runbook create --resource-group "teste" --automation-account "workflow" --name "$runbook_name" --type Python3 
+            az automation runbook create --resource-group $RESOURCE_GROUP --automation-account $AUTOMATION_ACCOUNT --name "$runbook_name" --type Python3 
         fi
           
         # Replace the content of the runbook with the content from the local Python script
-        az automation runbook replace-content --automation-account "workflow" --resource-group "teste" --name "$runbook_name" --content "@$file"
+        az automation runbook replace-content --automation-account $AUTOMATION_ACCOUNT --resource-group "teste" --name "$runbook_name" --content "@$file"
         
         # Publish the runbook
-        az automation runbook publish --automation-account "workflow" --resource-group "teste" --name "$runbook_name"
+        az automation runbook publish --automation-account $AUTOMATION_ACCOUNT --resource-group $RESOURCE_GROUP --name "$runbook_name"
         done
         
